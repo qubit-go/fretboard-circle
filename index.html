@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore guitar chords, alternate voicings, and the Circle of Fifths in an interactive, clean minimalist guitar theory dashboard. Play chords with high-fidelity synthesized guitar plucks.">
+  <title>Fretboard & Circle | Guitar Music Theory Lab</title>
+  
+  <!-- Google Fonts: Inter for UI, Lora for serif headers -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header Section -->
+    <header>
+      <h1 id="app-title">Fretboard & Circle</h1>
+      <p class="subtitle" id="app-subtitle">An interactive guitar chord explorer & circle of fifths helper</p>
+      
+      <!-- View selector Tabs -->
+      <nav class="tabs-nav" aria-label="Main navigation">
+        <button class="tab-btn active" id="tab-chord-explorer" data-tab="chord-explorer-view">Chord Explorer</button>
+        <button class="tab-btn" id="tab-circle-fifths" data-tab="circle-fifths-view">Circle of Fifths</button>
+      </nav>
+
+      <!-- Global Audio & Settings Controls -->
+      <div class="global-controls">
+        <div class="volume-control">
+          <label for="volume-slider">Volume</label>
+          <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.6" aria-label="Volume slider">
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- VIEW 1: Chord Explorer -->
+      <section class="view-panel active" id="chord-explorer-view">
+        <div class="fretboard-layout">
+          <!-- Sidebar filters -->
+          <aside class="control-sidebar">
+            <!-- Root Note Filter -->
+            <div class="card" id="root-filter-card">
+              <h2>Root Note</h2>
+              <div class="note-grid" id="root-note-grid" role="group" aria-label="Select root note">
+                <!-- JS will inject note buttons here -->
+              </div>
+            </div>
+
+            <!-- Chord Quality Filter -->
+            <div class="card" id="quality-filter-card">
+              <h2>Quality</h2>
+              <div class="flavor-list" id="chord-quality-list" role="group" aria-label="Select chord quality">
+                <!-- JS will inject Major, Minor, Diminished, Dominant buttons here -->
+              </div>
+            </div>
+
+            <!-- Extension Filter -->
+            <div class="card" id="extension-filter-card">
+              <h2>Extension</h2>
+              <div class="note-grid" id="chord-extension-grid" style="grid-template-columns: repeat(3, 1fr);" role="group" aria-label="Select chord extension">
+                <!-- JS will inject Normal, 6, 7, 9, 13 buttons here -->
+              </div>
+            </div>
+          </aside>
+
+          <!-- Main Fretboard Visualizer Column -->
+          <div class="main-display">
+            <!-- Chord Explorer Sub Navigation -->
+            <div class="subtabs-nav" role="tablist" aria-label="Explorer views">
+              <button class="subtab-btn active" id="subtab-btn-visualizer" data-subtab="subtab-visualizer" role="tab" aria-selected="true">Fretboard Visualizer</button>
+              <button class="subtab-btn" id="subtab-btn-voicings" data-subtab="subtab-voicings" role="tab" aria-selected="false">All 5 Voicings</button>
+            </div>
+
+            <!-- Subtab Panel 1: Fretboard Visualizer -->
+            <div class="subtab-panel active" id="subtab-visualizer" role="tabpanel">
+              <!-- Fretboard Visualizer Card -->
+              <div class="card fretboard-card" id="fretboard-visual-card">
+                <div class="fretboard-header">
+                  <div class="chord-info-title">
+                    <h2 id="display-chord-name">C Major</h2>
+                    <p id="display-voicing-name">Open Position</p>
+                  </div>
+                  <button class="play-chord-btn" id="btn-play-strum" aria-label="Strum chord">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                    Strum Chord
+                  </button>
+                </div>
+
+                <!-- Interactive Guitar Fretboard Wrapper -->
+                <div class="fretboard-wrapper">
+                  <svg class="fretboard-svg" id="fretboard-svg" width="900" height="180" viewBox="0 0 900 180" aria-label="Interactive guitar fretboard diagram">
+                    <!-- JS dynamically renders frets, strings, markers, and fingering dots -->
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Chord Theory & Details Card -->
+              <div class="card chord-details-card" id="chord-details-card" style="margin-top: 1.5rem;">
+                <h2>Chord Details</h2>
+                <div class="details-grid">
+                  <div class="detail-item">
+                    <div class="detail-item-label">Note Formula</div>
+                    <div class="detail-item-value chord-formula" id="info-formula">1 - 3 - 5</div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-item-label">Note Names</div>
+                    <div class="detail-item-value" id="info-note-names">C - E - G</div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-item-label">String Frets</div>
+                    <div class="detail-item-value" id="info-string-frets">x - 3 - 2 - 0 - 1 - 0</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Subtab Panel 2: Voicings List -->
+            <div class="subtab-panel" id="subtab-voicings" role="tabpanel" style="display: none;">
+              <div class="card voicings-container-card">
+                <h2>Voicings Comparison</h2>
+                <p class="voicings-desc-label" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; font-style: italic;">
+                  Explore and compare up to 5 distinct shapes for the selected chord. Click any card to select that voicing and view it on the main visualizer.
+                </p>
+                <div class="voicings-grid" id="voicings-comparison-grid">
+                  <!-- JS will dynamically inject 5 mini-fretboard cards here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: Circle of Fifths -->
+      <section class="view-panel" id="circle-fifths-view">
+        <div class="circle-layout">
+          <!-- Circle of Fifths Visualizer -->
+          <div class="circle-visual-container">
+            <div class="circle-svg-wrapper">
+              <svg class="circle-svg" id="circle-fifths-svg" viewBox="-200 -200 400 400" aria-label="Interactive Circle of Fifths diagram">
+                <!-- JS dynamically renders outer/inner sectors and labels -->
+              </svg>
+            </div>
+            
+            <!-- Click settings -->
+            <div class="circle-controls">
+              <div class="toggle-group" id="circle-play-mode" role="group" aria-label="Select playback style">
+                <button class="toggle-btn active" id="btn-mode-note" data-mode="note">Single Note</button>
+                <button class="toggle-btn" id="btn-mode-chord" data-mode="chord">Full Chord</button>
+              </div>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">
+              Click segments to play sounds and view key structures
+            </p>
+          </div>
+
+          <!-- Key Signature & Diatonic Chords Panel -->
+          <div class="card circle-info-card" id="key-info-card">
+            <div class="key-signature-banner">
+              <h3 id="info-key-name">C Major Key</h3>
+              <p id="info-key-signature">No sharps or flats</p>
+            </div>
+            
+            <div class="diatonic-section">
+              <h3>Primary Diatonic Chords</h3>
+              <table class="diatonic-table" id="diatonic-chords-table">
+                <thead>
+                  <tr>
+                    <th scope="col" style="width: 50px;">Play</th>
+                    <th scope="col" style="width: 70px;">Degree</th>
+                    <th scope="col">Chord Note</th>
+                    <th scope="col">Quality</th>
+                    <th scope="col" style="width: 110px;">Extension</th>
+                    <th scope="col" style="width: 140px;"></th>
+                  </tr>
+                </thead>
+                <tbody id="diatonic-chords-list">
+                  <!-- JS will dynamically populate rows here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>Crafted in the Guitar Theory Lab &bull; © 2026 Fretboard & Circle</p>
+    </footer>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

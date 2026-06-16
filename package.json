@@ -1,0 +1,9 @@
+{
+  "name": "fretboard-and-circle",
+  "version": "1.0.0",
+  "description": "Guitar music theory application",
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 8000"
+  }
+}

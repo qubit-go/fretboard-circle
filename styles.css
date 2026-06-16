@@ -1,0 +1,892 @@
+/* Modern, Clean Minimalist Light Mode Styling for Fretboard & Circle */
+
+:root {
+  --bg-color: #FAF8F5;
+  --card-bg: #FFFFFF;
+  --text-color: #2B2B2B;
+  --text-muted: #6C6861;
+  --border-color: #E9E5DF;
+  --border-active: #A26950;
+  --accent-color: #A26950;
+  --accent-light: #F6F1EA;
+  --accent-hover: #8F5941;
+  --accent-gold: #D4A373;
+  --accent-gold-light: #FAF2E8;
+  
+  --fretboard-wood: #EBDCCB;
+  --fretboard-nut: #E0CEBA;
+  --fret-wire: #B8AF9E;
+  
+  --font-serif: 'Lora', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  --shadow-sm: 0 2px 8px rgba(43, 43, 43, 0.03);
+  --shadow-md: 0 8px 24px rgba(162, 105, 80, 0.06);
+  --shadow-lg: 0 16px 36px rgba(162, 105, 80, 0.1);
+  --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Page Layout */
+.app-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem 1.5rem;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+h1 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 2.5rem;
+  letter-spacing: -0.02em;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-family: var(--font-serif);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+
+/* Tabs Navigation */
+.tabs-nav {
+  display: flex;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 50px;
+  padding: 0.35rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  padding: 0.6rem 1.6rem;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.tab-btn:hover {
+  color: var(--text-color);
+}
+
+.tab-btn.active {
+  background-color: var(--accent-light);
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* Master Volume Control */
+.global-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 1.2rem;
+  border-radius: 30px;
+  box-shadow: var(--shadow-sm);
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.volume-control input[type="range"] {
+  width: 80px;
+  accent-color: var(--accent-color);
+  cursor: pointer;
+}
+
+/* Main Views */
+.view-panel {
+  display: none;
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.view-panel.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Fretboard Section Styles */
+.fretboard-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 960px) {
+  .fretboard-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sidebar & Control Panels */
+.control-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.card h2 {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Root Note Selectors */
+.note-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.note-btn {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  aspect-ratio: 1;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.note-btn:hover {
+  background-color: var(--bg-color);
+  border-color: var(--accent-gold);
+}
+
+.note-btn.active {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(162, 105, 80, 0.2);
+}
+
+/* Flavor Buttons */
+.flavor-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.flavor-btn {
+  font-family: var(--font-sans);
+  text-align: left;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--card-bg);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flavor-btn:hover {
+  background-color: var(--bg-color);
+}
+
+.flavor-btn.active {
+  background-color: var(--accent-light);
+  border-color: var(--border-active);
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.flavor-btn .chord-suffix {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.flavor-btn.active .chord-suffix {
+  color: var(--accent-color);
+}
+
+/* Voicing Selections */
+.voicing-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.voicing-item {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background-color: var(--card-bg);
+}
+
+.voicing-item:hover {
+  background-color: var(--bg-color);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.voicing-item.active {
+  border-color: var(--accent-color);
+  background-color: var(--accent-gold-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.voicing-title {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.voicing-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Right Content Display */
+.main-display {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Fretboard Visualizer Display */
+.fretboard-card {
+  padding: 1.5rem;
+}
+
+.fretboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.chord-info-title h2 {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.chord-info-title p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.play-chord-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--accent-color);
+  color: #FFFFFF;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(162, 105, 80, 0.2);
+  transition: var(--transition);
+}
+
+.play-chord-btn:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(162, 105, 80, 0.3);
+}
+
+.play-chord-btn:active {
+  transform: translateY(0);
+}
+
+.fretboard-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  background-color: #FAF8F5;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem 0.5rem;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.fretboard-svg {
+  display: block;
+  min-width: 800px;
+  height: 180px;
+  margin: 0 auto;
+}
+
+/* SVG Interactive Styles */
+.fretboard-wood-rect {
+  fill: var(--fretboard-wood);
+}
+.fretboard-nut-rect {
+  fill: var(--fretboard-nut);
+}
+.fret-line {
+  stroke: var(--fret-wire);
+  stroke-width: 1.5;
+}
+.fret-marker {
+  fill: #FFFFFF;
+  opacity: 0.65;
+  stroke: var(--fret-wire);
+  stroke-width: 1;
+}
+.string-line {
+  stroke: #8C8475;
+  stroke-linecap: round;
+  transition: stroke 0.2s;
+}
+.string-line:hover {
+  stroke: var(--accent-color);
+  stroke-width: calc(inherit + 1px);
+  cursor: pointer;
+}
+.string-label {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--text-muted);
+  alignment-baseline: middle;
+  text-anchor: middle;
+}
+
+/* Fingering markers */
+.fret-dot-group {
+  cursor: pointer;
+  transition: var(--transition);
+}
+.fret-dot-circle {
+  fill: var(--accent-color);
+  stroke: #FFFFFF;
+  stroke-width: 1.5;
+  transition: var(--transition);
+}
+.fret-dot-circle.root {
+  fill: var(--text-color);
+  stroke: var(--accent-gold);
+  stroke-width: 2.5;
+}
+.fret-dot-text {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  fill: #FFFFFF;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.fret-dot-text.root {
+  fill: var(--accent-gold);
+}
+
+/* Fret string label overlays (top nut status indicators: play/muted) */
+.string-nut-indicator {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: bold;
+  text-anchor: middle;
+}
+.string-nut-indicator.muted {
+  fill: #C96A6A;
+}
+.string-nut-indicator.open {
+  fill: #61A375;
+}
+
+/* Interactive Fretboard note trigger overlays */
+.fret-trigger-rect {
+  fill: transparent;
+  cursor: pointer;
+}
+.fret-trigger-rect:hover {
+  fill: rgba(162, 105, 80, 0.08);
+}
+
+/* Fret numbering markers under the fretboard */
+.fret-num-text {
+  font-size: 10px;
+  fill: var(--text-muted);
+  text-anchor: middle;
+}
+
+/* Chord Details Box */
+.chord-details-card {
+  padding: 1.5rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.detail-item {
+  background-color: var(--bg-color);
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.detail-item-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+.detail-item-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.detail-item-value.chord-formula {
+  font-family: monospace;
+}
+
+/* Circle of Fifths Section Styles */
+.circle-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (max-width: 960px) {
+  .circle-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.circle-visual-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.circle-svg-wrapper {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1;
+}
+
+.circle-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Circle design tokens */
+.circle-rim {
+  fill: none;
+  stroke: var(--border-color);
+  stroke-width: 1;
+}
+
+.circle-divider {
+  fill: none;
+  stroke: var(--border-color);
+  stroke-width: 1;
+}
+
+.circle-sector {
+  cursor: pointer;
+  transition: fill 0.2s, stroke 0.2s;
+}
+
+.circle-sector.major {
+  fill: #FFFFFF;
+  stroke: var(--border-color);
+  stroke-width: 1;
+}
+
+.circle-sector.minor {
+  fill: #e6d7c3;
+  stroke: var(--border-color);
+  stroke-width: 1;
+}
+
+.circle-sector:hover {
+  fill: var(--accent-light) !important;
+}
+
+.circle-sector.active {
+  fill: var(--accent-gold-light) !important;
+  stroke: var(--accent-color) !important;
+  stroke-width: 2.5px !important;
+}
+
+.circle-text {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  fill: var(--text-color);
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none; /* Let clicks pass to the path below */
+  user-select: none;
+}
+
+.circle-text.minor {
+  font-size: 11px;
+  font-weight: 500;
+  fill: var(--text-muted);
+}
+
+.circle-sector.active + .circle-text {
+  fill: var(--accent-color);
+  font-weight: 700;
+}
+
+/* Circle Control Controls Panel */
+.circle-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.toggle-group {
+  display: flex;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 0.2rem;
+}
+
+.toggle-btn {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--text-muted);
+}
+
+.toggle-btn.active {
+  background-color: #FFFFFF;
+  color: var(--text-color);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Circle Info Panel */
+.circle-info-card {
+  padding: 2rem;
+  height: 100%;
+}
+
+.key-signature-banner {
+  background-color: var(--accent-light);
+  border-left: 4px solid var(--accent-color);
+  padding: 1rem;
+  border-radius: 0 12px 12px 0;
+  margin-bottom: 1.5rem;
+}
+
+.key-signature-banner h3 {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  margin-bottom: 0.25rem;
+}
+
+.key-signature-banner p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.diatonic-section h3 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+.diatonic-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  background: transparent;
+}
+
+.diatonic-table th {
+  text-align: left;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  padding: 0.6rem 0.8rem;
+  font-weight: 600;
+  border: none;
+}
+
+.diatonic-table td {
+  padding: 0.8rem;
+  font-size: 0.88rem;
+  vertical-align: middle;
+  white-space: nowrap;
+  background-color: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.diatonic-table td:first-child {
+  border-left: 1px solid var(--border-color);
+  border-radius: 10px 0 0 10px;
+}
+
+.diatonic-table td:last-child {
+  border-right: 1px solid var(--border-color);
+  border-radius: 0 10px 10px 0;
+}
+
+.diatonic-row {
+  cursor: default;
+  transition: var(--transition);
+}
+
+.diatonic-row:hover td {
+  background-color: var(--accent-light);
+}
+
+.diatonic-degree {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.diatonic-chord-name {
+  font-weight: 600;
+}
+
+/* Footer Section */
+footer {
+  margin-top: 4rem;
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+/* Sub-tabs Navigation inside Chord Explorer */
+.subtabs-nav {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0px;
+}
+
+.subtab-btn {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  padding: 0.6rem 0.5rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: var(--transition);
+}
+
+.subtab-btn:hover {
+  color: var(--text-color);
+}
+
+.subtab-btn.active {
+  color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* Subtab Panels */
+.subtab-panel {
+  display: none;
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.subtab-panel.active {
+  display: block;
+}
+
+/* Voicings Comparison Grid */
+.voicings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.voicing-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.voicing-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-color);
+  box-shadow: var(--shadow-md);
+}
+
+.voicing-card.active {
+  background-color: var(--accent-light);
+  border-color: var(--accent-color);
+  box-shadow: var(--shadow-md);
+}
+
+.voicing-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 0.4rem;
+}
+
+.voicing-card-details {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  margin-top: 0.4rem;
+}
+
+.mini-fretboard-svg {
+  width: 100%;
+  height: 65px;
+  display: block;
+  pointer-events: none; /* Make clicks register on the card container */
+  margin: 0.5rem 0;
+  border-radius: 6px;
+  background-color: #FAF8F5;
+  border: 1px solid var(--border-color);
+}
+
+/* Diatonic Table Select and Play Controls */
+.diatonic-select {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  outline: none;
+  transition: var(--transition);
+}
+
+.diatonic-select:hover {
+  border-color: var(--accent-color);
+}
+
+.diatonic-play-btn {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  cursor: pointer;
+  padding: 0.35rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.diatonic-play-btn:hover {
+  background-color: var(--accent-light);
+  color: var(--accent-hover);
+}
+
+.diatonic-play-btn svg {
+  display: block;
+}

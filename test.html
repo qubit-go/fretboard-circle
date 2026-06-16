@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chord Spelling Validation Suite</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-color: #FAF8F5;
+      --card-bg: #FFFFFF;
+      --text-color: #2B2B2B;
+      --text-muted: #6C6861;
+      --border-color: #E9E5DF;
+      --success-color: #4B8A64;
+      --success-bg: #EDF7F1;
+      --fail-color: #C95A5A;
+      --fail-bg: #FBEFEE;
+      --accent-color: #A26950;
+      
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-serif: 'Lora', Georgia, serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 2.5rem 1.5rem;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-family: var(--font-serif);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .summary-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-box {
+      padding: 1rem;
+      border-radius: 12px;
+    }
+    .stat-val {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+    .stat-box.passed { background-color: var(--success-bg); color: var(--success-color); }
+    .stat-box.failed { background-color: var(--fail-bg); color: var(--fail-color); }
+    .stat-box.total { background-color: var(--bg-color); border: 1px solid var(--border-color); }
+
+    .filters-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .filter-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active {
+      background-color: var(--accent-color);
+      color: #FFFFFF;
+      border-color: var(--accent-color);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+    }
+
+    th {
+      background-color: var(--bg-color);
+      text-align: left;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      font-weight: 600;
+    }
+
+    td {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.88rem;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 20px;
+    }
+    .status-badge.pass { background-color: var(--success-bg); color: var(--success-color); }
+    .status-badge.fail { background-color: var(--fail-bg); color: var(--fail-color); }
+
+    .notes-display {
+      font-family: monospace;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Chord Spelling Validator</h1>
+      <p class="subtitle">Validating generated shapes against mathematical intervals formula spelling</p>
+    </header>
+
+    <section class="summary-card">
+      <div class="stat-box total">
+        <div class="stat-val" id="total-val">0</div>
+        <div class="stat-label">Total Voicings Tested</div>
+      </div>
+      <div class="stat-box passed">
+        <div class="stat-val" id="pass-val">0</div>
+        <div class="stat-label">Voicings Passed</div>
+      </div>
+      <div class="stat-box failed">
+        <div class="stat-val" id="fail-val">0</div>
+        <div class="stat-label">Voicings Failed</div>
+      </div>
+    </section>
+
+    <div class="filters-bar">
+      <div>
+        <button class="filter-btn active" id="btn-show-all">Show All</button>
+        <button class="filter-btn" id="btn-show-failures" style="margin-left: 0.5rem;">Show Failures Only</button>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted);" id="table-legend">Showing all results</p>
+    </div>
+
+    <table id="test-results-table">
+      <thead>
+        <tr>
+          <th>Chord</th>
+          <th>Voicing</th>
+          <th>Frets</th>
+          <th>Played Notes</th>
+          <th>Expected Notes</th>
+          <th>Status</th>
+          <th>Details / Mismatches</th>
+        </tr>
+      </thead>
+      <tbody id="test-results-body">
+        <!-- Test rows will be injected here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script type="module">
+    import { CHROMATIC_SCALE, getChordVoicings, getNoteChromaticNumber } from './chords.js';
+
+    // Spellings of intervals: semitones relative to root
+    const CHORD_FORMULAS = {
+      'Major': [0, 4, 7],
+      'Major 6': [0, 4, 7, 9],
+      'Major 7': [0, 4, 7, 11],
+      'Major 9': [0, 4, 7, 11, 2],
+      'Major 13': [0, 4, 7, 11, 2, 9],
+      'Minor': [0, 3, 7],
+      'Minor 6': [0, 3, 7, 9],
+      'Minor 7': [0, 3, 7, 10],
+      'Minor 9': [0, 3, 7, 10, 2],
+      'Minor 13': [0, 3, 7, 10, 2, 9],
+      'Dominant 7': [0, 4, 7, 10],
+      'Dominant 9': [0, 4, 7, 10, 2],
+      'Dominant 13': [0, 4, 7, 10, 2, 9],
+      'Diminished': [0, 3, 6],
+      'Diminished 7': [0, 3, 6, 9],
+      'Diminished 9': [0, 3, 6, 9, 2],
+      'Diminished 13': [0, 3, 6, 9, 8]
+    };
+
+    let allResults = [];
+
+    function runTests() {
+      allResults = [];
+      let totalCount = 0;
+      let passCount = 0;
+      let failCount = 0;
+
+      // Loop through all root notes and flavor combinations
+      CHROMATIC_SCALE.forEach(root => {
+        const rootIndex = getNoteChromaticNumber(root);
+        
+        Object.keys(CHORD_FORMULAS).forEach(flavor => {
+          const expectedOffsets = CHORD_FORMULAS[flavor];
+          
+          // Compute exact expected note chromatic values (0-11)
+          const expectedChromatics = expectedOffsets.map(offset => (rootIndex + offset) % 12);
+          const expectedNoteNames = expectedChromatics.map(c => CHROMATIC_SCALE[c]);
+
+          // Fetch the generated voicings
+          const voicings = getChordVoicings(root, flavor);
+          
+          voicings.forEach(v => {
+            totalCount++;
+            
+            // Analyze notes played in voicing
+            const playedNotes = v.notes.filter(n => n !== 'x');
+            const playedChromatics = playedNotes.map(n => getNoteChromaticNumber(n));
+
+            // Assertions:
+            // 1. Root Note is present
+            const hasRoot = playedNotes.includes(root);
+            
+            // 2. All played notes are in expected chord notes
+            const invalidNotes = [];
+            playedNotes.forEach(note => {
+              if (!expectedNoteNames.includes(note)) {
+                invalidNotes.push(note);
+              }
+            });
+
+            const passed = hasRoot && invalidNotes.length === 0;
+            
+            if (passed) passCount++;
+            else failCount++;
+
+            let details = '';
+            if (!hasRoot) details += `Missing Root note (${root}). `;
+            if (invalidNotes.length > 0) details += `Played invalid notes: [${invalidNotes.join(', ')}]. `;
+
+            allResults.push({
+              chordName: `${root} ${flavor}`,
+              voicingName: v.voicingName,
+              frets: v.frets.map(f => f === -1 ? 'x' : f).join(' '),
+              playedNotes: [...new Set(playedNotes)].join(' '),
+              expectedNotes: [...new Set(expectedNoteNames)].join(' '),
+              passed,
+              details: details || 'Spelling matches intervals exactly'
+            });
+          });
+        });
+      });
+
+      // Update counters
+      document.getElementById('total-val').textContent = totalCount;
+      document.getElementById('pass-val').textContent = passCount;
+      document.getElementById('fail-val').textContent = failCount;
+
+      renderResultsTable(false); // default: show all
+    }
+
+    function renderResultsTable(failuresOnly) {
+      const tbody = document.getElementById('test-results-body');
+      tbody.innerHTML = '';
+
+      const filtered = failuresOnly ? allResults.filter(r => !r.passed) : allResults;
+
+      filtered.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.style.backgroundColor = r.passed ? '' : 'var(--fail-bg)';
+        
+        tr.innerHTML = `
+          <td><strong>${r.chordName}</strong></td>
+          <td>${r.voicingName}</td>
+          <td style="font-family: monospace;">${r.frets}</td>
+          <td class="notes-display">${r.playedNotes}</td>
+          <td class="notes-display" style="color: var(--text-muted);">${r.expectedNotes}</td>
+          <td>
+            <span class="status-badge ${r.passed ? 'pass' : 'fail'}">
+              ${r.passed ? 'PASS ✓' : 'FAIL ✗'}
+            </span>
+          </td>
+          <td style="font-size: 0.8rem; color: ${r.passed ? 'var(--text-muted)' : 'var(--fail-color)'}; font-weight: ${r.passed ? 'normal' : '600'};">
+            ${r.details}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('table-legend').textContent = failuresOnly 
+        ? `Showing ${filtered.length} failed voicings (of ${allResults.length} total)`
+        : `Showing all ${allResults.length} test cases`;
+    }
+
+    // Bind filters
+    document.getElementById('btn-show-all').addEventListener('click', (e) => {
+      document.getElementById('btn-show-all').classList.add('active');
+      document.getElementById('btn-show-failures').classList.remove('active');
+      renderResultsTable(false);
+    });
+
+    document.getElementById('btn-show-failures').addEventListener('click', (e) => {
+      document.getElementById('btn-show-all').classList.remove('active');
+      document.getElementById('btn-show-failures').classList.add('active');
+      renderResultsTable(true);
+    });
+
+    // Run suite on load
+    runTests();
+  </script>
+</body>
+</html>
