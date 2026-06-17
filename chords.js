@@ -35,6 +35,10 @@ export function getChordFlavor(quality, extension) {
     if (extension === '7') return 'Major 7';
     if (extension === '9') return 'Major 9';
     if (extension === '13') return 'Major 13';
+    if (extension === 'b5') return 'Major b5';
+    if (extension === 'b9') return 'Major b9';
+    if (extension === '#9') return 'Major #9';
+    if (extension === '#5') return 'Augmented';
   }
   if (quality === 'Minor') {
     if (extension === 'normal') return 'Minor';
@@ -42,17 +46,34 @@ export function getChordFlavor(quality, extension) {
     if (extension === '7') return 'Minor 7';
     if (extension === '9') return 'Minor 9';
     if (extension === '13') return 'Minor 13';
+    if (extension === 'b5') return 'Diminished';
+    if (extension === 'b9') return 'Minor b9';
+    if (extension === '#9') return 'Minor #9';
+    if (extension === '#5') return 'Minor #5';
   }
   if (quality === 'Dominant') {
     if (extension === 'normal' || extension === '6' || extension === '7') return 'Dominant 7';
     if (extension === '9') return 'Dominant 9';
     if (extension === '13') return 'Dominant 13';
+    if (extension === 'b5') return 'Dominant 7b5';
+    if (extension === 'b9') return 'Dominant 7b9';
+    if (extension === '#9') return 'Dominant 7#9';
+    if (extension === '#5') return 'Dominant 7#5';
   }
   if (quality === 'Diminished') {
     if (extension === 'normal' || extension === '6') return 'Diminished';
-    if (extension === '7') return 'Diminished 7';
+    if (extension === '7' || extension === '13') return 'Diminished 7';
     if (extension === '9') return 'Diminished 9';
-    if (extension === '13') return 'Diminished 13';
+    if (extension === 'b5') return 'Diminished';
+    if (extension === 'b9') return 'Diminished b9';
+    if (extension === '#9' || extension === '#5') return 'Diminished 7';
+  }
+  if (quality === 'Augmented') {
+    if (extension === 'normal' || extension === '6' || extension === '13' || extension === 'b5' || extension === '#5') return 'Augmented';
+    if (extension === '7') return 'Augmented 7';
+    if (extension === '9') return 'Augmented 9';
+    if (extension === 'b9') return 'Augmented 7b9';
+    if (extension === '#9') return 'Augmented 7#9';
   }
   return 'Major';
 }
@@ -107,8 +128,8 @@ const MOVABLE_SHAPES = {
   'Major 6': [
     { name: 'Barre Shape (Root 6)', rootString: 5, frets: [0, 2, 2, 1, 2, 0], fingers: [1, 3, 4, 2, 4, 1] },
     { name: 'Barre Shape (Root 5)', rootString: 4, frets: ['x', 0, 2, 2, 2, 2], fingers: ['x', 1, 3, 3, 3, 3] },
-    { name: 'Jazz Shell (Root 6)', rootString: 5, frets: [0, 'x', 2, 2, 2, 'x'], fingers: [1, 'x', 2, 3, 4, 'x'] },
-    { name: 'Jazz Shell (Root 5)', rootString: 4, frets: ['x', 0, 2, 0, 2, 0], fingers: ['x', 1, 3, 1, 4, 1] },
+    { name: 'Jazz Shell (Root 6)', rootString: 5, frets: [0, 'x', 2, 1, 2, 'x'], fingers: [1, 'x', 3, 2, 4, 'x'] },
+    { name: 'Jazz Shell (Root 5)', rootString: 4, frets: ['x', 0, 2, -1, 2, 0], fingers: ['x', 1, 3, 1, 4, 1] },
     { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 2, 0, 2], fingers: ['x', 'x', 1, 3, 1, 4] }
   ],
   'Major 7': [
@@ -120,30 +141,30 @@ const MOVABLE_SHAPES = {
   ],
   'Major 9': [
     { name: 'Jazz Voicing (Root 5)', rootString: 4, frets: ['x', 0, -1, 1, 0, 'x'], fingers: ['x', 2, 1, 3, 1, 'x'] },
-    { name: 'Jazz Voicing (Root 6)', rootString: 5, frets: [0, 'x', 1, 1, 2, 'x'], fingers: [1, 'x', 2, 3, 4, 'x'] },
+    { name: 'Jazz Voicing (Root 6)', rootString: 5, frets: [0, 'x', 1, 1, 0, 2], fingers: [1, 'x', 2, 3, 1, 4] },
     { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 2, 2, 0], fingers: ['x', 'x', 1, 3, 4, 0] },
-    { name: 'Movable Shape 2 (Root 5)', rootString: 4, frets: ['x', 0, 2, 0, 0, 0], fingers: ['x', 3, 2, 0, 0, 0] },
-    { name: 'Full Voicing (Root 6)', rootString: 5, frets: [0, 2, 1, 1, 2, 2], fingers: [1, 3, 1, 1, 4, 4] }
+    { name: 'Movable Shape 2 (Root 5)', rootString: 4, frets: ['x', 0, 2, 1, 0, 0], fingers: ['x', 3, 2, 1, 0, 0] },
+    { name: 'Full Voicing (Root 6)', rootString: 5, frets: [0, 2, 1, 1, 0, 2], fingers: [1, 3, 1, 1, 0, 2] }
   ],
   'Major 13': [
     { name: 'Jazz Voicing (Root 6)', rootString: 5, frets: [0, 'x', 1, 1, 2, 2], fingers: [1, 'x', 2, 2, 3, 4] },
-    { name: 'Jazz Voicing (Root 5)', rootString: 4, frets: ['x', 0, 2, 0, 2, 2], fingers: ['x', 1, 2, 1, 3, 4] },
-    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 2, 0, 1, 2, 0], fingers: [1, 3, 1, 2, 4, 1] },
+    { name: 'Jazz Voicing (Root 5)', rootString: 4, frets: ['x', 0, 2, 1, 2, 2], fingers: ['x', 1, 2, 1, 3, 4] },
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 2, 1, 1, 2, 0], fingers: [1, 3, 1, 1, 4, 1] },
     { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 2, 1, 2, 2], fingers: ['x', 1, 3, 2, 4, 4] },
-    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 2, 2, 3], fingers: ['x', 'x', 1, 2, 3, 4] }
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 4, 2, 2], fingers: ['x', 'x', 1, 4, 2, 2] }
   ],
   'Minor': [
     { name: 'Barre Shape (Root 6)', rootString: 5, frets: [0, 2, 2, 0, 0, 0], fingers: [1, 3, 4, 1, 1, 1] },
     { name: 'Barre Shape (Root 5)', rootString: 4, frets: ['x', 0, 2, 2, 1, 0], fingers: ['x', 1, 3, 4, 2, 1] },
-    { name: 'CAGED C-Shape (Root 5)', rootString: 4, frets: ['x', 0, -2, -3, -2, -3], fingers: ['x', 4, 2, 1, 3, 1] },
+    { name: 'CAGED C-Shape (Root 5)', rootString: 4, frets: ['x', 0, -2, -3, -2, -4], fingers: ['x', 4, 2, 1, 3, 1] },
     { name: 'CAGED D-Shape (Root 4)', rootString: 3, frets: ['x', 'x', 0, 2, 3, 1], fingers: ['x', 'x', 1, 3, 4, 2] },
     { name: 'CAGED G-Shape (Root 6)', rootString: 5, frets: [0, -2, -3, -3, 0, 0], fingers: [4, 2, 1, 1, 4, 4] }
   ],
   'Minor 6': [
     { name: 'Barre Shape (Root 6)', rootString: 5, frets: [0, 2, 2, 0, 2, 0], fingers: [1, 3, 4, 1, 2, 1] },
     { name: 'Barre Shape (Root 5)', rootString: 4, frets: ['x', 0, 2, 2, 1, 2], fingers: ['x', 1, 3, 4, 2, 4] },
-    { name: 'Jazz Shell (Root 6)', rootString: 5, frets: [0, 'x', 2, 0, 1, 'x'], fingers: [1, 'x', 3, 1, 2, 'x'] },
-    { name: 'Jazz Shell (Root 5)', rootString: 4, frets: ['x', 0, 2, 0, 1, 2], fingers: ['x', 1, 3, 1, 2, 4] },
+    { name: 'Jazz Shell (Root 6)', rootString: 5, frets: [0, 'x', 2, 0, 2, 'x'], fingers: [1, 'x', 3, 1, 2, 'x'] },
+    { name: 'Jazz Shell (Root 5)', rootString: 4, frets: ['x', 0, 2, -1, 1, 2], fingers: ['x', 1, 3, 1, 2, 4] },
     { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 2, 0, 1], fingers: ['x', 'x', 1, 3, 1, 2] }
   ],
   'Minor 7': [
@@ -164,8 +185,8 @@ const MOVABLE_SHAPES = {
     { name: 'Jazz Voicing (Root 6)', rootString: 5, frets: [0, 'x', 0, 0, 2, 2], fingers: [1, 'x', 2, 2, 3, 4] },
     { name: 'Jazz Voicing (Root 5)', rootString: 4, frets: ['x', 0, 2, 0, 1, 2], fingers: ['x', 1, 3, 1, 2, 4] },
     { name: 'Movable (Root 6)', rootString: 5, frets: [0, 2, 0, 0, 2, 0], fingers: [1, 3, 1, 1, 4, 1] },
-    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 2, 0, 3, 0], fingers: ['x', 1, 3, 1, 4, 1] },
-    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 2, 1, 2], fingers: ['x', 'x', 1, 3, 2, 4] }
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 2, 0, 1, 2], fingers: ['x', 1, 3, 1, 2, 4] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 4, 1, 1], fingers: ['x', 'x', 1, 4, 2, 2] }
   ],
   'Dominant 7': [
     { name: 'Barre Shape (Root 6)', rootString: 5, frets: [0, 2, 0, 1, 0, 0], fingers: [1, 3, 1, 2, 1, 1] },
@@ -176,9 +197,9 @@ const MOVABLE_SHAPES = {
   ],
   'Dominant 9': [
     { name: 'Standard (Root 5)', rootString: 4, frets: ['x', 0, -1, 0, 0, 0], fingers: ['x', 2, 1, 3, 3, 3] },
-    { name: 'Standard (Root 6)', rootString: 5, frets: [0, 2, 0, 1, 2, 0], fingers: [1, 3, 1, 2, 4, 1] },
-    { name: 'Jazz Shell (Root 6)', rootString: 5, frets: [0, 'x', 0, 0, 2, 'x'], fingers: [1, 'x', 2, 3, 4, 'x'] },
-    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 2, 0, 2, 2], fingers: ['x', 1, 3, 1, 4, 4] },
+    { name: 'Standard (Root 6)', rootString: 5, frets: [0, 2, 0, 1, 0, 2], fingers: [1, 3, 1, 2, 1, 4] },
+    { name: 'Jazz Shell (Root 6)', rootString: 5, frets: [0, 'x', 0, 1, 0, 2], fingers: [1, 'x', 2, 3, 1, 4] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 2, 0, 0, -3], fingers: ['x', 1, 3, 1, 1, 2] },
     { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 2, 1, 0], fingers: ['x', 'x', 1, 3, 2, 0] }
   ],
   'Dominant 13': [
@@ -191,9 +212,9 @@ const MOVABLE_SHAPES = {
   'Diminished': [
     { name: 'Standard (Root 6)', rootString: 5, frets: [0, 1, 2, 0, 'x', 'x'], fingers: [1, 2, 3, 1, 'x', 'x'] },
     { name: 'Standard (Root 5)', rootString: 4, frets: ['x', 0, 1, 2, 1, 'x'], fingers: ['x', 1, 2, 4, 3, 'x'] },
-    { name: 'Standard (Root 4)', rootString: 3, frets: ['x', 'x', 0, 1, 2, 1], fingers: ['x', 'x', 1, 2, 4, 3] },
-    { name: 'Alternative (Root 6)', rootString: 5, frets: [0, 2, 0, 1, 'x', 'x'], fingers: [1, 4, 1, 2, 'x', 'x'] },
-    { name: 'Alternative (Root 5)', rootString: 4, frets: ['x', 0, 2, 1, 2, 'x'], fingers: ['x', 1, 3, 2, 4, 'x'] }
+    { name: 'Standard (Root 4)', rootString: 3, frets: ['x', 'x', 0, 1, 3, 1], fingers: ['x', 'x', 1, 2, 4, 3] },
+    { name: 'Alternative (Root 6)', rootString: 5, frets: [0, 1, 2, 0, -1, 3], fingers: [1, 2, 4, 1, 1, 3] },
+    { name: 'Alternative (Root 5)', rootString: 4, frets: ['x', 0, 1, 2, 1, -1], fingers: ['x', 1, 2, 4, 1, 1] }
   ],
   'Diminished 7': [
     { name: 'Standard (Root 6)', rootString: 5, frets: [0, 'x', -1, 0, -1, 'x'], fingers: [2, 'x', 1, 3, 1, 'x'] },
@@ -214,8 +235,120 @@ const MOVABLE_SHAPES = {
     { name: 'Standard (Root 6)', rootString: 5, frets: [0, -2, -1, -3, 1, 'x'], fingers: [3, 1, 2, 1, 4, 'x'] },
     { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', -1, 0, 1, 'x'], fingers: [2, 'x', 1, 3, 4, 'x'] },
     { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 1, -1, 1, 'x'], fingers: ['x', 2, 3, 1, 4, 'x'] },
-    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 1, 0, 2], fingers: ['x', 'x', 1, 2, 1, 3] }
-  ]
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 3, 0, 1], fingers: ['x', 'x', 1, 3, 1, 2] }
+  ],
+  'Augmented': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 3, 2, 1, 1, 'x'], fingers: [1, 4, 3, 2, 2, 'x'] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 3, 2, 2, 'x'], fingers: ['x', 1, 4, 2, 3, 'x'] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, -1, -1, -2], fingers: ['x', 'x', 3, 2, 2, 1] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', 'x', 1, 0, 0, -1], fingers: ['x', 'x', 3, 2, 2, 1] },
+    { name: 'CAGED C-Shape (Root 5)', rootString: 4, frets: ['x', 0, -1, -2, -2, -3], fingers: ['x', 4, 3, 2, 2, 1] }
+  ],
+  'Augmented 7': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', 0, 1, 1, 'x'], fingers: [1, 'x', 2, 3, 4, 'x'] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 3, 0, 2, 'x'], fingers: ['x', 1, 4, 1, 2, 'x'] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 1, 0, -1, 1, 'x'], fingers: ['x', 3, 2, 1, 4, 'x'] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', 'x', 1, 0, 0, 1], fingers: ['x', 'x', 2, 1, 1, 3] },
+    { name: 'Movable (Root 5 Alt)', rootString: 4, frets: ['x', 0, 3, 0, 2, 3], fingers: ['x', 1, 3, 1, 2, 4] }
+  ],
+  'Augmented 9': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', 0, 1, 1, 2], fingers: [1, 'x', 2, 2, 3, 4] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, -1, 0, 0, 1], fingers: ['x', 2, 1, 2, 2, 3] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 1, 0, -1, 1, 0], fingers: ['x', 2, 1, 1, 3, 0] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', 0, 1, 0, 0, 1], fingers: ['x', 0, 2, 0, 0, 3] },
+    { name: 'Movable (Root 6 Alt)', rootString: 5, frets: [0, 3, 0, 1, 1, 2], fingers: [1, 3, 1, 1, 1, 2] }
+  ],
+  'Augmented 7b9': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', 0, 1, 1, 1], fingers: [1, 'x', 2, 3, 4, 1] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, -1, 0, -1, 1], fingers: ['x', 2, 1, 3, 1, 4] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 1, 0, -1, 1, -1], fingers: ['x', 3, 2, 1, 4, 1] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', -1, 1, 0, 0, 1], fingers: ['x', 1, 3, 1, 1, 2] },
+    { name: 'Movable (Root 6 Alt)', rootString: 5, frets: [0, 3, 0, 1, 1, 1], fingers: [1, 3, 1, 2, 2, 1] }
+  ],
+  'Augmented 7#9': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', 0, 1, 1, 3], fingers: [1, 'x', 2, 2, 2, 4] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, -1, 0, 1, 1], fingers: ['x', 2, 1, 2, 3, 4] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 1, 0, -1, 1, 1], fingers: ['x', 2, 1, 1, 3, 3] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', 1, 1, 0, 0, 1], fingers: ['x', 3, 4, 1, 1, 2] },
+    { name: 'Movable (Root 6 Alt)', rootString: 5, frets: [0, 3, 0, 1, 1, 3], fingers: [1, 3, 1, 2, 2, 4] }
+  ],
+  'Major b5': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 1, 2, 1, -1, 0], fingers: [1, 2, 4, 3, 1, 1] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 1, 2, 2, -1], fingers: ['x', 1, 2, 3, 4, 1] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 1, 3, 2], fingers: ['x', 'x', 1, 2, 4, 3] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', 'x', -1, 0, 0, -3], fingers: ['x', 'x', 2, 1, 1, 1] },
+    { name: 'CAGED C-Shape (Root 5)', rootString: 4, frets: ['x', 0, -1, -4, -2, -3], fingers: ['x', 4, 3, 1, 2, 1] }
+  ],
+  'Major b9': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', 1, 1, 0, 1], fingers: [1, 'x', 2, 3, 1, 4] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, -1, 1, -1, 0], fingers: ['x', 2, 1, 4, 1, 3] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 0, 0, -1, 2, -1], fingers: ['x', 3, 2, 1, 4, 1] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', -1, 0, 0, 0, 2], fingers: ['x', 1, 2, 2, 2, 4] },
+    { name: 'Movable (Root 6 Alt)', rootString: 5, frets: [0, 2, 1, 1, 0, 1], fingers: [1, 3, 1, 1, 0, 2] }
+  ],
+  'Major #9': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', 1, 1, 0, 3], fingers: [1, 'x', 2, 3, 1, 4] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, -1, 1, 1, 0], fingers: ['x', 2, 1, 3, 4, 3] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 0, 0, -1, 2, 1], fingers: ['x', 3, 1, 1, 4, 2] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', 1, 0, 0, 0, 2], fingers: ['x', 2, 3, 1, 1, 4] },
+    { name: 'Movable (Root 6 Alt)', rootString: 5, frets: [0, 2, 1, 1, 0, 3], fingers: [1, 3, 1, 1, 0, 4] }
+  ],
+  'Minor b9': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', 0, 0, 0, 1], fingers: [1, 'x', 2, 2, 2, 3] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, -2, 0, -1, 0], fingers: ['x', 2, 1, 3, 1, 2] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 0, 0, -2, 1, -1], fingers: ['x', 3, 2, 1, 4, 1] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', -1, 0, 0, -1, 1], fingers: ['x', 1, 3, 2, 1, 4] },
+    { name: 'Movable (Root 6 Alt)', rootString: 5, frets: [0, 2, 0, 0, 0, 1], fingers: [1, 3, 1, 1, 1, 2] }
+  ],
+  'Minor #9': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', 0, 0, 0, 3], fingers: [1, 'x', 2, 2, 2, 4] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, -2, 0, 1, 0], fingers: ['x', 2, 1, 4, 3, 2] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 0, 0, -2, 1, 1], fingers: ['x', 3, 1, 1, 4, 4] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', 1, 0, 0, -1, 1], fingers: ['x', 3, 4, 2, 1, 4] },
+    { name: 'Movable (Root 6 Alt)', rootString: 5, frets: [0, 2, 0, 0, 0, 3], fingers: [1, 3, 1, 1, 1, 4] }
+  ],
+  'Minor #5': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 3, 2, 0, 'x', 'x'], fingers: [1, 4, 2, 1, 'x', 'x'] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 3, 2, 1, 'x'], fingers: ['x', 1, 4, 2, 3, 'x'] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, -2, -1, -2], fingers: ['x', 'x', 3, 1, 2, 1] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', 'x', 1, 0, -1, -1], fingers: ['x', 'x', 3, 2, 1, 1] },
+    { name: 'CAGED C-Shape (Root 5)', rootString: 4, frets: ['x', 0, -2, -2, -2, -4], fingers: ['x', 4, 2, 2, 2, 1] }
+  ],
+  'Dominant 7b5': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', 0, 1, -1, 'x'], fingers: [1, 'x', 3, 2, 1, 'x'] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 1, 0, 2, 'x'], fingers: ['x', 1, 2, 1, 3, 'x'] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 1, 1, 2], fingers: ['x', 'x', 1, 2, 2, 3] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', 'x', -1, 0, 0, 1], fingers: ['x', 'x', 2, 1, 1, 3] },
+    { name: 'Movable (Root 5 Alt)', rootString: 4, frets: ['x', 0, 1, 2, 2, 3], fingers: ['x', 1, 2, 3, 3, 4] }
+  ],
+  'Dominant 7b9': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', 0, 1, 0, 1], fingers: [1, 'x', 2, 3, 1, 4] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, -1, 0, -1, 0], fingers: ['x', 2, 1, 3, 1, 2] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 0, 0, -1, 1, -1], fingers: ['x', 3, 2, 1, 4, 1] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', -1, 0, 0, 0, 1], fingers: ['x', 1, 3, 2, 2, 4] },
+    { name: 'Movable (Root 6 Alt)', rootString: 5, frets: [0, 2, 0, 1, 0, 1], fingers: [1, 3, 1, 2, 1, 2] }
+  ],
+  'Dominant 7#9': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', 0, 1, 0, 3], fingers: [1, 'x', 2, 2, 2, 4] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, -1, 0, 1, 0], fingers: ['x', 2, 1, 3, 4, 2] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 0, 0, -1, 1, 1], fingers: ['x', 3, 1, 1, 4, 4] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', 1, 0, 0, 0, 1], fingers: ['x', 3, 4, 2, 2, 4] },
+    { name: 'Movable (Root 6 Alt)', rootString: 5, frets: [0, 2, 0, 1, 0, 3], fingers: [1, 3, 1, 2, 1, 4] }
+  ],
+  'Dominant 7#5': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', 0, 1, 1, 'x'], fingers: [1, 'x', 2, 3, 4, 'x'] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 3, 0, 2, 'x'], fingers: ['x', 1, 4, 1, 2, 'x'] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 1, 0, -1, 1, 'x'], fingers: ['x', 3, 2, 1, 4, 'x'] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', 'x', 1, 0, 0, 1], fingers: ['x', 'x', 2, 1, 1, 3] },
+    { name: 'Movable (Root 5 Alt)', rootString: 4, frets: ['x', 0, 3, 0, 2, 3], fingers: ['x', 1, 3, 1, 2, 4] }
+  ],
+  'Diminished b9': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', -1, 0, -1, 1], fingers: [2, 'x', 1, 3, 1, 4] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, -2, -1, -2, -1], fingers: ['x', 3, 1, 2, 1, 2] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 2, 0, 1, 4, 1], fingers: ['x', 3, 1, 2, 4, 1] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', -1, -1, 0, -1, 0], fingers: ['x', 1, 1, 2, 1, 3] },
+    { name: 'Movable (Root 6 Alt)', rootString: 5, frets: [0, -2, -1, -3, -1, 1], fingers: [2, 1, 3, 1, 4, 1] }
+  ],
 };
 
 // Helper to normalize notes to sharp format

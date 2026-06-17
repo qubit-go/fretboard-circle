@@ -208,7 +208,7 @@ function renderQualityList() {
   const container = document.getElementById('chord-quality-list');
   container.innerHTML = '';
 
-  const qualities = ['Major', 'Minor', 'Diminished', 'Dominant'];
+  const qualities = ['Major', 'Minor', 'Diminished', 'Dominant', 'Augmented'];
 
   qualities.forEach(q => {
     const btn = document.createElement('button');
@@ -219,7 +219,7 @@ function renderQualityList() {
     btn.id = `btn-quality-${q}`;
     
     // Add brief labels for quality suffixes
-    const suffixMap = { Major: 'maj', Minor: 'min', Diminished: 'dim', Dominant: 'dom' };
+    const suffixMap = { Major: 'maj', Minor: 'min', Diminished: 'dim', Dominant: 'dom', Augmented: 'aug' };
     btn.innerHTML = `<span>${q}</span><span class="chord-suffix">${suffixMap[q]}</span>`;
     
     btn.addEventListener('click', () => {
@@ -245,7 +245,11 @@ function renderExtensionGrid() {
     { value: '6', label: '6' },
     { value: '7', label: '7' },
     { value: '9', label: '9' },
-    { value: '13', label: '13' }
+    { value: '13', label: '13' },
+    { value: 'b5', label: 'b5' },
+    { value: 'b9', label: 'b9' },
+    { value: '#9', label: '#9' },
+    { value: '#5', label: '#5' }
   ];
 
   extensions.forEach(ext => {
@@ -484,18 +488,34 @@ function updateChordDetails(voicing) {
     'Major 7': '1 - 3 - 5 - 7',
     'Major 9': '1 - 3 - 5 - 7 - 9',
     'Major 13': '1 - 3 - 5 - 7 - 9 - 13',
+    'Major b5': '1 - 3 - b5',
+    'Major b9': '1 - 3 - 5 - 7 - b9',
+    'Major #9': '1 - 3 - 5 - 7 - #9',
     'Minor': '1 - b3 - 5',
     'Minor 6': '1 - b3 - 5 - 6',
     'Minor 7': '1 - b3 - 5 - b7',
     'Minor 9': '1 - b3 - 5 - b7 - 9',
     'Minor 13': '1 - b3 - 5 - b7 - 9 - 13',
+    'Minor b9': '1 - b3 - 5 - b7 - b9',
+    'Minor #9': '1 - b3 - 5 - b7 - #9',
+    'Minor #5': '1 - b3 - #5',
     'Dominant 7': '1 - 3 - 5 - b7',
     'Dominant 9': '1 - 3 - 5 - b7 - 9',
     'Dominant 13': '1 - 3 - 5 - b7 - 9 - 13',
+    'Dominant 7b5': '1 - 3 - b5 - b7',
+    'Dominant 7b9': '1 - 3 - 5 - b7 - b9',
+    'Dominant 7#9': '1 - 3 - 5 - b7 - #9',
+    'Dominant 7#5': '1 - 3 - #5 - b7',
     'Diminished': '1 - b3 - b5',
     'Diminished 7': '1 - b3 - b5 - bb7',
     'Diminished 9': '1 - b3 - b5 - bb7 - 9',
-    'Diminished 13': '1 - b3 - b5 - bb7 - b13'
+    'Diminished 13': '1 - b3 - b5 - bb7 - b13',
+    'Diminished b9': '1 - b3 - b5 - bb7 - b9',
+    'Augmented': '1 - 3 - #5',
+    'Augmented 7': '1 - 3 - #5 - b7',
+    'Augmented 9': '1 - 3 - #5 - b7 - 9',
+    'Augmented 7b9': '1 - 3 - #5 - b7 - b9',
+    'Augmented 7#9': '1 - 3 - #5 - b7 - #9'
   };
 
   document.getElementById('info-formula').textContent = formulaMap[internalFlavor] || 'Custom';
@@ -928,6 +948,10 @@ function updateCircleDetails() {
           <option value="7">7</option>
           <option value="9">9</option>
           <option value="13">13</option>
+          <option value="b5">b5</option>
+          <option value="b9">b9</option>
+          <option value="#9">#9</option>
+          <option value="#5">#5</option>
         </select>
       </td>
       <td style="text-align: right;">
