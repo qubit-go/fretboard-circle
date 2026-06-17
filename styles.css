@@ -912,4 +912,28 @@ footer {
   .card {
     padding: 1rem;
   }
+
+  header {
+    width: 100%;
+    align-items: center;
+  }
+
+  .tab-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.82rem;
+  }
+
+  .tabs-nav {
+    max-width: 100%;
+  }
+
+  .global-controls {
+    padding: 0.4rem 1rem;
+  }
+
+  .diatonic-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
