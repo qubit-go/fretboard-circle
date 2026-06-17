@@ -69,9 +69,12 @@ export function getChordFlavor(quality, extension) {
     if (extension === '#9' || extension === '#5') return 'Diminished 7';
   }
   if (quality === 'Augmented') {
-    if (extension === 'normal' || extension === '6' || extension === '13' || extension === 'b5' || extension === '#5') return 'Augmented';
+    if (extension === 'normal' || extension === '#5') return 'Augmented';
+    if (extension === '6') return 'Augmented 6';
     if (extension === '7') return 'Augmented 7';
     if (extension === '9') return 'Augmented 9';
+    if (extension === '13') return 'Augmented 13';
+    if (extension === 'b5') return 'Augmented b5';
     if (extension === 'b9') return 'Augmented 7b9';
     if (extension === '#9') return 'Augmented 7#9';
   }
@@ -349,6 +352,27 @@ const MOVABLE_SHAPES = {
     { name: 'Movable (Root 3)', rootString: 2, frets: ['x', -1, -1, 0, -1, 0], fingers: ['x', 1, 1, 2, 1, 3] },
     { name: 'Movable (Root 6 Alt)', rootString: 5, frets: [0, -2, -1, -3, -1, 1], fingers: [2, 1, 3, 1, 4, 1] }
   ],
+  'Augmented 6': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 'x', -1, 1, 1, 'x'], fingers: [1, 'x', 1, 2, 3, 'x'] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 3, -1, 2, 'x'], fingers: ['x', 1, 4, 1, 2, 'x'] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 1, 0, -1, 0, 'x'], fingers: ['x', 2, 1, 1, 1, 'x'] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', 'x', 1, 0, 0, 0], fingers: ['x', 'x', 2, 1, 1, 1] },
+    { name: 'Movable (Root 5 Alt)', rootString: 4, frets: ['x', 0, 3, 2, 2, 2], fingers: ['x', 1, 3, 2, 2, 2] }
+  ],
+  'Augmented 13': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 3, 0, 1, 2, 2], fingers: [1, 3, 1, 1, 2, 2] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 3, 0, 2, 2], fingers: ['x', 1, 3, 1, 2, 2] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 1, 0, -1, 0, 0], fingers: ['x', 2, 1, 1, 0, 0] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', -4, 1, 0, 0, 0], fingers: ['x', 1, 3, 1, 1, 1] },
+    { name: 'Movable (Root 5 Alt)', rootString: 4, frets: ['x', 0, 3, 0, 0, 2], fingers: ['x', 0, 3, 0, 0, 2] }
+  ],
+  'Augmented b5': [
+    { name: 'Movable (Root 6)', rootString: 5, frets: [0, 3, 2, 1, -1, 'x'], fingers: [1, 4, 2, 1, 1, 'x'] },
+    { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 3, 2, 2, -1], fingers: ['x', 1, 4, 1, 2, 1] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, -1, -1, 4], fingers: ['x', 'x', 1, 1, 1, 4] },
+    { name: 'Movable (Root 3)', rootString: 2, frets: ['x', 'x', -1, 0, 0, -1], fingers: ['x', 'x', 2, 1, 1, 1] },
+    { name: 'Movable (Root 5 Alt)', rootString: 4, frets: ['x', 0, -1, -2, -2, -1], fingers: ['x', 2, 1, 3, 1, 1] }
+  ]
 };
 
 // Helper to normalize notes to sharp format
