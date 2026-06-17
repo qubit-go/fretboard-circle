@@ -512,8 +512,11 @@ function updateChordDetails(voicing) {
     'Diminished 13': '1 - b3 - b5 - bb7 - b13',
     'Diminished b9': '1 - b3 - b5 - bb7 - b9',
     'Augmented': '1 - 3 - #5',
+    'Augmented 6': '1 - 3 - #5 - 6',
     'Augmented 7': '1 - 3 - #5 - b7',
     'Augmented 9': '1 - 3 - #5 - b7 - 9',
+    'Augmented 13': '1 - 3 - #5 - b7 - 9 - 13',
+    'Augmented b5': '1 - 3 - b5 - #5',
     'Augmented 7b9': '1 - 3 - #5 - b7 - b9',
     'Augmented 7#9': '1 - 3 - #5 - b7 - #9'
   };
