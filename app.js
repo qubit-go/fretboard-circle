@@ -1,4 +1,4 @@
-import { initAudio, playNote, playChord, setMasterVolume } from './audio.js?v=5';
+import { initAudio, playNote, playChord, setMasterVolume } from './audio.js?v=6';
 import { 
   CHROMATIC_SCALE, 
   getChordVoicings, 
@@ -10,7 +10,7 @@ import {
   STRING_NAMES,
   normalizeNoteName,
   getNoteChromaticNumber
-} from './chords.js?v=5';
+} from './chords.js?v=6';
 
 // --- State Management ---
 let state = {
@@ -334,6 +334,8 @@ function drawMiniFretboard(voicing) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('class', 'mini-fretboard-svg');
   svg.setAttribute('viewBox', '0 0 200 55');
+  svg.setAttribute('width', '100%');
+  svg.setAttribute('height', '100%');
 
   const miniStartX = 15;
   const miniEndX = 190;

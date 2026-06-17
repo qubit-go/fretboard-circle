@@ -32,6 +32,11 @@
   padding: 0;
 }
 
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-color);
@@ -842,6 +847,8 @@ footer {
 }
 
 .voicing-card {
+  width: 100%;
+  box-sizing: border-box;
   background-color: #FFFFFF;
   border: 1px solid var(--border-color);
   border-radius: 14px;
@@ -883,7 +890,9 @@ footer {
 
 .mini-fretboard-svg {
   width: 100%;
-  height: 65px;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 200 / 55;
   display: block;
   pointer-events: none; /* Make clicks register on the card container */
   margin: 0.5rem 0;
@@ -940,6 +949,10 @@ footer {
     height: 38px;
     font-size: 0.85rem;
   }
+
+  .note-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
   
   .flavor-list {
     display: grid;
@@ -971,6 +984,23 @@ footer {
 
   .global-controls {
     padding: 0.4rem 1rem;
+  }
+
+  .subtabs-nav {
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .kofi-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .kofi-text {
+    white-space: normal;
+    text-align: left;
   }
 
   .diatonic-table-wrapper {
