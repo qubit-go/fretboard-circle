@@ -1,4 +1,4 @@
-import { initAudio, playNote, playChord, setMasterVolume } from './audio.js?v=9';
+import { initAudio, playNote, playChord, setMasterVolume } from './audio.js?v=10';
 import { 
   CHROMATIC_SCALE, 
   getChordVoicings, 
@@ -10,7 +10,7 @@ import {
   STRING_NAMES,
   normalizeNoteName,
   getNoteChromaticNumber
-} from './chords.js?v=9';
+} from './chords.js?v=10';
 
 // --- State Management ---
 let state = {
@@ -501,6 +501,7 @@ function updateChordDetails(voicing) {
     'Minor b9': '1 - b3 - 5 - b7 - b9',
     'Minor #9': '1 - b3 - 5 - b7 - #9',
     'Minor #5': '1 - b3 - #5',
+    'Dominant 6': '1 - 3 - 5 - 6 - b7',
     'Dominant 7': '1 - 3 - 5 - b7',
     'Dominant 9': '1 - 3 - 5 - b7 - 9',
     'Dominant 13': '1 - 3 - 5 - b7 - 9 - 13',

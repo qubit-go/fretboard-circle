@@ -52,7 +52,8 @@ export function getChordFlavor(quality, extension) {
     if (extension === '#5') return 'Minor #5';
   }
   if (quality === 'Dominant') {
-    if (extension === 'normal' || extension === '6' || extension === '7') return 'Dominant 7';
+    if (extension === 'normal' || extension === '7') return 'Dominant 7';
+    if (extension === '6') return 'Dominant 6';
     if (extension === '9') return 'Dominant 9';
     if (extension === '13') return 'Dominant 13';
     if (extension === 'b5') return 'Dominant 7b5';
@@ -190,6 +191,13 @@ const MOVABLE_SHAPES = {
     { name: 'Movable (Root 6)', rootString: 5, frets: [0, 2, 0, 0, 2, 0], fingers: [1, 3, 1, 1, 4, 1] },
     { name: 'Movable (Root 5)', rootString: 4, frets: ['x', 0, 2, 0, 1, 2], fingers: ['x', 1, 3, 1, 2, 4] },
     { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 4, 1, 1], fingers: ['x', 'x', 1, 4, 2, 2] }
+  ],
+  'Dominant 6': [
+    { name: 'Standard (Root 6)', rootString: 5, frets: [0, 2, 0, 1, 2, 0], fingers: [1, 3, 1, 2, 4, 1] },
+    { name: 'Standard (Root 5)', rootString: 4, frets: ['x', 0, 2, 0, 2, 2], fingers: ['x', 1, 3, 1, 4, 4] },
+    { name: 'Movable (Root 6 alternate)', rootString: 5, frets: [0, 'x', 0, 1, 2, 'x'], fingers: [1, 'x', 2, 3, 4, 'x'] },
+    { name: 'Movable (Root 5 alternate)', rootString: 4, frets: ['x', 0, -1, 0, 2, 2], fingers: ['x', 1, 2, 1, 3, 4] },
+    { name: 'Movable (Root 4)', rootString: 3, frets: ['x', 'x', 0, 2, 1, 2], fingers: ['x', 'x', 1, 3, 2, 4] }
   ],
   'Dominant 7': [
     { name: 'Barre Shape (Root 6)', rootString: 5, frets: [0, 2, 0, 1, 0, 0], fingers: [1, 3, 1, 2, 1, 1] },
