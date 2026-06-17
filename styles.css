@@ -749,6 +749,48 @@ footer {
   font-style: italic;
 }
 
+.kofi-container {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.kofi-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background-color: var(--accent-light);
+  border: 1px solid var(--border-color);
+  color: var(--accent-color);
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  font-style: normal; /* Override footer's italic style */
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.kofi-btn:hover {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(162, 105, 80, 0.15);
+}
+
+.kofi-btn:active {
+  transform: translateY(0);
+}
+
+.kofi-icon {
+  font-size: 1.1rem;
+}
+
+
 /* Sub-tabs Navigation inside Chord Explorer */
 .subtabs-nav {
   display: flex;
