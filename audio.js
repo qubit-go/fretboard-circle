@@ -160,3 +160,42 @@ export function setMasterVolume(volume) {
     masterGain.gain.setValueAtTime(volume, audioCtx.currentTime);
   }
 }
+
+// Global Web Audio Unlocker for mobile browsers
+export function setupAudioUnlocker() {
+  const unlock = () => {
+    const ctx = initAudio();
+    if (!ctx) return;
+
+    if (ctx.state === 'suspended') {
+      // Play a short silent buffer to unlock Web Audio on iOS/WebKit
+      try {
+        const buffer = ctx.createBuffer(1, 1, 22050);
+        const source = ctx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(ctx.destination);
+        source.start(0);
+      } catch (e) {
+        console.warn("Silent playback unlock failed:", e);
+      }
+
+      ctx.resume()
+        .then(() => {
+          if (ctx.state === 'running') {
+            removeListeners();
+          }
+        })
+        .catch(err => console.warn("Context resume failed:", err));
+    } else if (ctx.state === 'running') {
+      removeListeners();
+    }
+  };
+
+  const events = ['click', 'touchstart', 'touchend', 'keydown'];
+  
+  const removeListeners = () => {
+    events.forEach(e => window.removeEventListener(e, unlock, true));
+  };
+
+  events.forEach(e => window.addEventListener(e, unlock, true));
+}

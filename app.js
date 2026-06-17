@@ -1,4 +1,4 @@
-import { initAudio, playNote, playChord, setMasterVolume } from './audio.js?v=10';
+import { initAudio, playNote, playChord, setMasterVolume, setupAudioUnlocker } from './audio.js?v=11';
 import { 
   CHROMATIC_SCALE, 
   getChordVoicings, 
@@ -10,7 +10,7 @@ import {
   STRING_NAMES,
   normalizeNoteName,
   getNoteChromaticNumber
-} from './chords.js?v=10';
+} from './chords.js?v=11';
 
 // --- State Management ---
 let state = {
@@ -56,6 +56,7 @@ const stringThicknesses = [3.5, 2.8, 2.2, 1.6, 1.2, 0.8];
 
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
+  setupAudioUnlocker();
   setupEventListeners();
   renderRootNoteGrid();
   renderQualityList();
