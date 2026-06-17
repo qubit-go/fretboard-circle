@@ -5,27 +5,23 @@ let masterGain = null;
 
 // Lazily initialize the Audio Context on first user interaction
 export function initAudio() {
-  if (audioCtx) return audioCtx;
-
-  // Support both standard and prefixed AudioContext
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  audioCtx = new AudioContextClass();
+  
+  if (!audioCtx) {
+    audioCtx = new AudioContextClass();
 
-  // Create a master gain node for volume control
-  masterGain = audioCtx.createGain();
-  masterGain.gain.value = 0.6; // Default master volume
-  masterGain.connect(audioCtx.destination);
+    // Create a master gain node for volume control
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.6; // Default master volume
+    masterGain.connect(audioCtx.destination);
+  }
+
+  // Synchronously trigger resume if suspended (critical for iOS Safari autoplay unlock)
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume().catch(err => console.warn("AudioContext resume failed:", err));
+  }
 
   return audioCtx;
-}
-
-// Resume AudioContext if suspended (browser autoplay policy)
-async function ensureAudioActive() {
-  const ctx = initAudio();
-  if (ctx.state === 'suspended') {
-    await ctx.resume();
-  }
-  return ctx;
 }
 
 // Generates a short white noise buffer for the pluck strike transient
@@ -45,8 +41,9 @@ function createNoiseBuffer(ctx) {
  * @param {number} delayMs - Delay before starting the note in milliseconds.
  * @param {number} volume - Individual note velocity/volume (0.0 to 1.0).
  */
-export async function playNote(midiNote, delayMs = 0, volume = 0.5) {
-  const ctx = await ensureAudioActive();
+export function playNote(midiNote, delayMs = 0, volume = 0.5) {
+  const ctx = initAudio();
+  if (!ctx) return;
   const startTime = ctx.currentTime + (delayMs / 1000);
 
   // Convert MIDI note to frequency
@@ -140,7 +137,7 @@ export async function playNote(midiNote, delayMs = 0, volume = 0.5) {
  * @param {number} strumSpeedMs - Delay between string plucks in milliseconds (e.g. 50ms).
  * @param {number} volume - Volume of the chord strum (0.0 to 1.0).
  */
-export async function playChord(midiNotes, strumSpeedMs = 50, volume = 0.5) {
+export function playChord(midiNotes, strumSpeedMs = 50, volume = 0.5) {
   // Strumming direction: low strings to high strings
   // Standard chord array is usually [string6, string5, string4, string3, string2, string1]
   // We play non-muted strings (-1) with a staggering delay.

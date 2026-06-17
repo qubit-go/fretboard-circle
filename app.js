@@ -1,4 +1,4 @@
-import { initAudio, playNote, playChord, setMasterVolume } from './audio.js?v=8';
+import { initAudio, playNote, playChord, setMasterVolume } from './audio.js?v=9';
 import { 
   CHROMATIC_SCALE, 
   getChordVoicings, 
@@ -10,7 +10,7 @@ import {
   STRING_NAMES,
   normalizeNoteName,
   getNoteChromaticNumber
-} from './chords.js?v=8';
+} from './chords.js?v=9';
 
 // --- State Management ---
 let state = {
