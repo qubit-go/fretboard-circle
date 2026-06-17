@@ -890,3 +890,26 @@ footer {
 .diatonic-play-btn svg {
   display: block;
 }
+
+/* Mobile Responsive Styling (max-width: 768px) */
+@media (max-width: 768px) {
+  .note-btn {
+    aspect-ratio: auto;
+    height: 38px;
+    font-size: 0.85rem;
+  }
+  
+  .flavor-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .flavor-list > button:last-child {
+    grid-column: span 2;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+}
